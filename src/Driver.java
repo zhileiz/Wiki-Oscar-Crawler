@@ -161,9 +161,32 @@ public class Driver {
                 }
                 break;
             case 7:
-                url = links.get("Best Animated Feature").attr("abs:href");
-                sl = new Q7(url, 7);
-                answer = sl.getSolution();
+                System.out.print("Enter Category: ");
+                boolean mInput = false;
+                while (true) {
+                    String in = src.nextLine();
+                    try {
+                        in = correctFormat(in);
+                        url = links.get(in).attr("abs:href");
+                        if (url == null) {
+                            System.out.println("Gibberish Input, try again: ");
+                        } else {
+                            mInput = true;
+                            break;
+                        }
+                    } catch (Exception e){
+                        System.out.println("Gibberish Input, try again: ");
+                        continue;
+                    }
+                }
+                String it = src.nextLine();
+                try {
+                    int t = Integer.parseInt(it);
+                    sl = new Q7(url, 6,t);
+                    answer = sl.getSolution();
+                } catch (Exception e){
+                    e.printStackTrace();
+                }
                 break;
             case 8:
                 url = links.get("Best Animated Feature").attr("abs:href");
