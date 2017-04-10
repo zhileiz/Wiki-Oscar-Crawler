@@ -11,16 +11,9 @@ import org.jsoup.select.*;
  */
 public class Main {
 
-
     public static void main(String[] args) throws IOException {
-
         Driver dr = new Driver();
         dr.loop();
-
-
     }
-
-
-
 
 }

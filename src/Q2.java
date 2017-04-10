@@ -18,6 +18,7 @@ public class Q2 extends Solution{
         screenplay = play;
     }
 
+    @Override
     public String solve(){
         Elements table = doc.select("table.wikitable");
         for (Element tb : table){
@@ -37,9 +38,4 @@ public class Q2 extends Solution{
         return "Play not exist, please check spelling!";
     }
 
-    @Override
-    String getSolution() {
-        solve();
-        return "Answer to Q" + this.question + ": " + solve() + "\n";
-    }
 }

@@ -23,6 +23,7 @@ public class Q5 extends Solution{
         this.directors = new HashMap<String, Integer>();
     }
 
+    @Override
     public String solve(){
         Elements tbs = doc.select("table");
         for (Element tb : tbs) {
@@ -55,10 +56,5 @@ public class Q5 extends Solution{
             }
         }
         return sb.toString();
-    }
-
-    @Override
-    String getSolution() {
-        return "Answer to Q" + this.question + ": " + solve() + "\n";
     }
 }

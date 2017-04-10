@@ -21,17 +21,17 @@ public class Q6 extends Solution{
         this.offices = new HashMap<Integer, String>();
     }
 
+    @Override
     public String solve(){
+        System.out.print("Loading..");
         Elements tables = doc.select("table.wikitable");
         for (Element table : tables){
             try {
                 Element a = table.select("tr").select("a[href]").first();
-                System.out.println(a.text() + ": ");
                 String k = getBoxOffice(a.attr("abs:href"));
                 int kv = getValue(k);
-                System.out.println("Box Office: " + k);
-                System.out.println("Round to: " + kv);
                 offices.put(kv, a.text());
+                System.out.print("..");
             } catch (Exception e){
 
             }
@@ -98,8 +98,4 @@ public class Q6 extends Solution{
         return "##### Top Box is: " + hs.get(max);
     }
 
-    @Override
-    String getSolution() {
-        return "Answer to Q" + this.question + ": " + solve() + "\n";
-    }
 }

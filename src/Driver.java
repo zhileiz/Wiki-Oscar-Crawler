@@ -35,18 +35,26 @@ public class Driver {
 
     public void loop(){
         while (true){
-            System.out.println("What do you want to know?: ");
             printQuestions();
-            String input = src.nextLine();
-            if (input.equals("quit") || input.equals("exit")){
-                break;
-            } else {
-                try {
-                    int qNum = Integer.parseInt(input);
-                    System.out.println(returnAnswer(qNum));
-                } catch (NumberFormatException e){
-                    System.out.println("Not a Number, try again!");
+            String s = "";
+            while(true) {
+                String input = src.nextLine();
+                if (input.equals("quit") || input.equals("exit")) {
+                    s = "quit";
+                    break;
+                } else {
+                    try {
+                        int qNum = Integer.parseInt(input);
+                        System.out.println(returnAnswer(qNum));
+                        break;
+                    } catch (NumberFormatException e) {
+                        System.out.println("###> Invalid Input, try again: ");
+
+                    }
                 }
+            }
+            if (s.equals("quit")){
+                break;
             }
         }
     }
@@ -107,7 +115,7 @@ public class Driver {
     private String workOnCase2(){
         String answer = "";
         String url = links.get("Best Original Screenplay").attr("abs:href");
-        System.out.println("Enter the Screeplay title: ");
+        System.out.print("###> Enter the Screeplay title: ");
         String input = src.nextLine();
         try {
             Solution sl = new Q2(url, 2, input);
@@ -120,10 +128,11 @@ public class Driver {
 
     private String workOnCase3() {
         String answer = "";
-        System.out.print("Enter Award Category: ");
+        System.out.print("###> Enter Award Category: ");
         boolean hasInput = false;
         String url = takeInputForUrl();
         printYears();
+        System.out.print("###> Enter Era: ");
         String ip = src.nextLine();
         try {
             int it = Integer.parseInt(ip);
@@ -138,7 +147,7 @@ public class Driver {
     private String workOnCase4() {
         String answer = "";
         String url = links.get("Best Leading Actor").attr("abs:href");
-        System.out.println("Please enter the role");
+        System.out.println("###> Please enter the role: ");
         String role = src.nextLine();
         try {
             Solution sl = new Q4(url, 4, role);
@@ -153,10 +162,9 @@ public class Driver {
     private String workOnCase5(){
         String answer = "";
         String url = links.get("Best Director").attr("abs:href");
-        System.out.println("Enter Number of times: ");
-        String time = src.nextLine();
+        System.out.print("###> Enter Number of times: ");
+        int t = takeInputForInt();
         try {
-            int t = Integer.parseInt(time);
             Solution sl = new Q5(url, 5,t);
             answer = sl.getSolution();
         } catch (Exception e){
@@ -167,7 +175,7 @@ public class Driver {
 
     private String workOnCase6(){
         String answer = "";
-        System.out.print("Enter Category: ");
+        System.out.print("###> Enter Award Category: ");
         boolean isInput = false;
         String url = takeInputForUrl();
         try {
@@ -181,13 +189,13 @@ public class Driver {
 
     private String workOnCase7(){
         String answer = "";
-        System.out.print("Enter Category: ");
+        System.out.print("###> Enter Award Category: ");
         boolean mInput = false;
         String url = takeInputForUrl();
-        String it = src.nextLine();
+        System.out.print("###> Enter Age: ");
+        int t = takeInputForInt();
         try {
-            int t = Integer.parseInt(it);
-            Solution sl = new Q7(url, 6,t);
+            Solution sl = new Q7(url, 7,t);
             answer = sl.getSolution();
         } catch (Exception e){
             e.printStackTrace();
@@ -197,10 +205,10 @@ public class Driver {
 
     private String workOnCase8(){
         String answer = "";
-        System.out.print("Enter Category1: ");
+        System.out.print("###> Enter Award Category 1: ");
         boolean pInput = false;
         String url = takeInputForUrl();
-        System.out.print("Enter Category2: ");
+        System.out.print("###> Enter Award Category 2: ");
         boolean qInput = false;
         String subUrl = takeInputForUrl();
         try {
@@ -223,7 +231,6 @@ public class Driver {
     }
 
     private String takeInputForUrl(){
-        boolean pInput = false;
         String url = "";
         while (true) {
             String in = src.nextLine();
@@ -231,17 +238,35 @@ public class Driver {
                 in = correctFormat(in);
                 url = links.get(in).attr("abs:href");
                 if (url == null) {
-                    System.out.println("Gibberish Input, try again: ");
+                    System.out.print("###> Invalid Input, try again: ");
                 } else {
-                    pInput = true;
                     break;
                 }
             } catch (Exception e){
-                System.out.println("Gibberish Input, try again: ");
+                System.out.print("###> Invalid Input, try again: ");
                 continue;
             }
         }
         return url;
+    }
+
+    private int takeInputForInt(){
+        int k = -1;
+        while (true) {
+            String in = src.nextLine();
+            try {
+                k = Integer.parseInt(in);
+                if (k < 1 || k > 110) {
+                    System.out.println("###> Invalid Input, try again: ");
+                } else {
+                    break;
+                }
+            } catch (Exception e){
+                System.out.println("###> Invalid Input, try again: ");
+                continue;
+            }
+        }
+        return k;
     }
 
     private String correctFormat(String str){
@@ -256,18 +281,20 @@ public class Driver {
     }
 
     private void printQuestions(){
+        System.out.println("----------------------------------------------------------------\n" +
+                           "What do you want to know?: ");
         System.out.println("1. Best Animated Feature: Companies with most nomination");
         System.out.println("2. Best Original Screenplay: Who wrote...?");
-        System.out.println("3. Best Documentary Feature: 1960s? 1970s? 1990s?");
+        System.out.println("3. Award of ... in 1960s? 1970s? 1990s?");
         System.out.println("4. Best Leading Actor: Role as a ...?");
-        System.out.println("5. Best Director: Who got nominated ... times?");
+        System.out.println("5. Best Director: Who got nominated over ... times?");
         System.out.println("6. Highest Box Office for film that won ... ?");
         System.out.println("7. People who won ... over the age of ... ?");
         System.out.println("8. (WildCard) People who won ... also won ... ?");
-        System.out.println("------ Extra Credit ------");
         System.out.println("9. Movies with all big category nominations? ");
-        System.out.println("10.(WildCard) Nominated at least 2 times but no wins in ... ?");
-        System.out.println("!! Or type 'quit' or 'exit' to exit !!");
+        System.out.println("10.(WildCard) Nominated at least 2 times but no wins in ... ?\n");
+        System.out.println("---------- type corresponding number or type 'quit'------------");
+        System.out.print("###> Your Question?: ");
     }
 
     private void printYears(){

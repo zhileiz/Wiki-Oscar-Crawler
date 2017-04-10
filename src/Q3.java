@@ -17,6 +17,7 @@ public class Q3 extends Solution{
         this.doc = Jsoup.connect(url).get();
     }
 
+    @Override
     public String solve(){
         Elements tables = doc.select("table");
         StringBuilder sb = new StringBuilder();
@@ -55,9 +56,4 @@ public class Q3 extends Solution{
         return sb.toString();
     }
 
-    @Override
-    String getSolution() {
-        solve();
-        return "Answer to Q" + this.question + ": " + solve() + "\n";
-    }
 }

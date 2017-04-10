@@ -18,6 +18,7 @@ public class Q4 extends Solution{
         this.role = role;
     }
 
+    @Override
     public String solve(){
         StringBuilder sb = new StringBuilder();
         for (Element table : doc.select("table.sortable")) {
@@ -42,9 +43,4 @@ public class Q4 extends Solution{
         return sb.toString();
     }
 
-    @Override
-    String getSolution() {
-        solve();
-        return "Answer to Q" + this.question + ": " + solve() + "\n";
-    }
 }

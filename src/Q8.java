@@ -26,39 +26,31 @@ public class Q8 extends Solution{
         doc2 = Jsoup.connect(subUrl).get();
     }
 
+    @Override
     public String solve(){
         StringBuilder sb = new StringBuilder();
-        Elements prize1 = doc.select("table.sortable").first().select("tr");
-        Elements winners1 = new Elements();
-        for (Element a : prize1) {
-            if (a.select("td").size()>0 && a.select("th").size() > 0) {
-                Element person = a.select("td").first().select("a").first();
-                winners1.add(person);
-                list1.add(person.text());
-            }
-        }
-        Elements prize2 = doc2.select("table.sortable").first().select("tr");
-        Elements winners2 = new Elements();
-        for (Element a : prize2) {
-            if (a.select("td").size()>0 && a.select("th").size() > 0) {
-                Element person = a.select("td").first().select("a").first();
-                winners2.add(person);
-                list2.add(person.text());
-            }
-        }
+        populateList(list1,doc);
+        populateList(list2,doc2);
         Iterator<String> it = list1.iterator();
         while (it.hasNext()){
             String t = it.next();
             if (list2.contains(t)){
                 sb.append(t + "\n");
-                System.out.println("##### Both: " + t);
             }
         }
         return sb.toString();
     }
 
-    @Override
-    String getSolution() {
-        return "Q8 Answer:" + solve();
+    private void populateList(HashSet<String> hs, Document d){
+        Elements prize = d.select("table.sortable").first().select("tr");
+        Elements winners = new Elements();
+        for (Element a : prize) {
+            if (a.select("td").size()>0 && a.select("th").size() > 0) {
+                Element person = a.select("td").first().select("a").first();
+                winners.add(person);
+                hs.add(person.text());
+            }
+        }
     }
+
 }

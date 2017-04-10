@@ -10,6 +10,10 @@ public abstract class Solution {
         this.question = question;
     }
 
-    abstract String getSolution();
+    abstract String solve();
+
+    public String getSolution(){
+        return "\n****************\nAnswer to Q" + this.question + ": \n" + solve() + "\n****************\n";
+    };
 
 }

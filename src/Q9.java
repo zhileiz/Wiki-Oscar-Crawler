@@ -7,7 +7,7 @@ public class Q9 extends Solution{
     }
 
     @Override
-    String getSolution() {
-        return "Q9 Answer";
+    public String solve(){
+        return "";
     }
 }

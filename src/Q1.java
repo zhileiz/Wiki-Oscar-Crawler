@@ -25,6 +25,7 @@ public class Q1 extends Solution{
         return isInteger(s,10);
     }
 
+    @Override
     public String solve(){
         Elements table = doc.select("table.wikitable");
         HashMap<Integer,String> nominations = new HashMap<Integer, String>();
@@ -61,12 +62,5 @@ public class Q1 extends Solution{
             if(Character.digit(s.charAt(i),radix) < 0) return false;
         }
         return true;
-    }
-
-    public
-
-    @Override
-    String getSolution() {
-        return "Answer to Q" + this.question + ": " + solve() + "\n";
     }
 }

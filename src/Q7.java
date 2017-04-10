@@ -18,7 +18,9 @@ public class Q7 extends Solution{
         this.limit = age;
     }
 
+    @Override
     public String solve(){
+        System.out.print("Loading...");
         StringBuilder sb = new StringBuilder();
         Elements events = doc.select("table.sortable").first().select("th");
         Elements Oscars = new Elements();
@@ -41,6 +43,7 @@ public class Q7 extends Solution{
                 int ag = computeAge(os,ac);
                 if (ag >= limit) {
                     sb.append(Oscars.get(k).text() + ": " + actors.get(k).text() + " was " + ag + " years old.\n");
+                    System.out.print("..");
                 }
             } catch (Exception e){
             }
@@ -108,8 +111,4 @@ public class Q7 extends Solution{
         return year-birthyear;
     }
 
-    @Override
-    String getSolution() {
-        return "Answer to Q" + this.question + ": " + solve() + "\n";
-    }
 }
