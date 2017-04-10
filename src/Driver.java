@@ -1,4 +1,12 @@
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
+
 import javax.sound.midi.Soundbank;
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Scanner;
 
 /**
@@ -6,10 +14,15 @@ import java.util.Scanner;
  */
 public class Driver {
     Scanner src;
+    Document doc;
+    HashMap<String, Element> links;
 
-    public Driver(){
+    public Driver() throws IOException{
         System.out.println("##### Welcome to Oscar Info #####");
         src = new Scanner(System.in);
+        doc = Jsoup.connect("https://en.wikipedia.org/wiki/Portal:Academy_Award").get();
+        links = new HashMap<String, Element>();
+        getLinks();
     }
 
     public void loop(){
@@ -22,7 +35,7 @@ public class Driver {
             } else {
                 try {
                     int qNum = Integer.parseInt(input);
-                    System.out.println(returnAnswer("url", qNum));
+                    System.out.println(returnAnswer(qNum));
                 } catch (NumberFormatException e){
                     System.out.println("Not a Number, try again!");
                 }
@@ -30,45 +43,68 @@ public class Driver {
         }
     }
 
-    public String returnAnswer(String url, int k){
+    private void getLinks(){
+        Element div = doc.select("table").get(1);
+        Elements hrefs = div.select("a[href]");
+        for (Element h : hrefs) {
+            links.put(h.text(), h);
+        }
+    }
+
+    public String returnAnswer(int k){
         String answer = "";
+        String url = "";
         Solution sl;
         switch (k) {
             case 1:
-                sl = new Q1(url, 1);
-                answer = sl.getSolution();
+                url = links.get("Best Animated Feature").attr("abs:href");
+                try {
+                    sl = new Q1(url, 1);
+                    answer = sl.getSolution();
+                } catch (IOException e){
+                    e.printStackTrace();
+                }
                 break;
             case 2:
+                url = links.get("Best Animated Feature").attr("abs:href");
                 sl = new Q2(url, 2);
                 answer = sl.getSolution();
                 break;
             case 3:
+                url = links.get("Best Animated Feature").attr("abs:href");
                 sl = new Q3(url, 3);
                 answer = sl.getSolution();
             case 4:
+                url = links.get("Best Animated Feature").attr("abs:href");
                 sl = new Q4(url, 4);
                 answer = sl.getSolution();
                 break;
             case 5:
+                url = links.get("Best Animated Feature").attr("abs:href");
                 sl = new Q5(url, 5);
                 answer = sl.getSolution();
                 break;
             case 6:
+                url = links.get("Best Animated Feature").attr("abs:href");
                 sl = new Q6(url, 6);
                 return sl.getSolution();
             case 7:
+                url = links.get("Best Animated Feature").attr("abs:href");
                 sl = new Q7(url, 7);
                 answer = sl.getSolution();
                 break;
             case 8:
+                url = links.get("Best Animated Feature").attr("abs:href");
                 sl = new Q8(url, 8);
                 answer = sl.getSolution();
                 break;
             case 9:
+                url = links.get("Best Animated Feature").attr("abs:href");
                 sl = new Q9(url, 9);
                 answer = sl.getSolution();
                 break;
             case 10:
+                url = links.get("Best Animated Feature").attr("abs:href");
                 sl = new Q10(url, 10);
                 answer = sl.getSolution();
                 break;
