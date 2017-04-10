@@ -112,9 +112,15 @@ public class Driver {
                 }
                 break;
             case 4:
-                url = links.get("Best Animated Feature").attr("abs:href");
-                sl = new Q4(url, 4);
-                answer = sl.getSolution();
+                url = links.get("Best Leading Actor").attr("abs:href");
+                System.out.println("Please enter the role");
+                String role = src.nextLine();
+                try {
+                    sl = new Q4(url, 4, role);
+                    answer = sl.getSolution();
+                } catch (Exception e){
+                    e.printStackTrace();
+                }
                 break;
             case 5:
                 url = links.get("Best Animated Feature").attr("abs:href");

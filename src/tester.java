@@ -13,12 +13,26 @@ public class tester {
 
     public static void main(String[] args) throws IOException {
 
-        Document doc = Jsoup.connect("https://en.wikipedia.org/wiki/Portal:Academy_Award").get();
-        Element div = doc.select("table").get(1);
-        Elements hrefs = div.select("a[href]");
-        for (Element h : hrefs) {
-            System.out.println(h.text()+": ");
-            System.out.println(h.attr("abs:href"));
+        Document doc = Jsoup.connect("https://en.wikipedia.org/wiki/Academy_Award_for_Best_Actor").get();
+
+        for (Element table : doc.select("table.sortable")) {
+            for (Element row : table.select("tr")) {
+                if (row.select("td").size() < 3){
+                    continue;
+                } else {
+                    Element td = row.select("td").get(2);
+                    if (td.text().contains("!")) {
+                        System.out.println(td.select("span.sorttext").text());
+                        if (td.select("span.sorttext").text().contains("King")) {
+                            System.out.println("!!!KING!!!:" + row.select("td").first().select("a").text()
+                                    + " " + td.select("span.sorttext").text());
+                        }
+                    }
+                    else {
+                        System.out.println(td.text());
+                    }
+                }
+            }
         }
 
     }
