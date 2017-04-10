@@ -123,9 +123,16 @@ public class Driver {
                 }
                 break;
             case 5:
-                url = links.get("Best Animated Feature").attr("abs:href");
-                sl = new Q5(url, 5);
-                answer = sl.getSolution();
+                url = links.get("Best Director").attr("abs:href");
+                System.out.println("Enter Number of times: ");
+                String time = src.nextLine();
+                try {
+                    int t = Integer.parseInt(time);
+                    sl = new Q5(url, 5,t);
+                    answer = sl.getSolution();
+                } catch (Exception e){
+                    e.printStackTrace();
+                }
                 break;
             case 6:
                 url = links.get("Best Animated Feature").attr("abs:href");
