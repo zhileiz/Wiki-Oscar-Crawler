@@ -54,6 +54,7 @@ public class Driver {
     public String returnAnswer(int k){
         String answer = "";
         String url = "";
+        String subUrl = "";
         Solution sl;
         switch (k) {
             case 1:
@@ -189,9 +190,48 @@ public class Driver {
                 }
                 break;
             case 8:
-                url = links.get("Best Animated Feature").attr("abs:href");
-                sl = new Q8(url, 8);
-                answer = sl.getSolution();
+                System.out.print("Enter Category1: ");
+                boolean pInput = false;
+                while (true) {
+                    String in = src.nextLine();
+                    try {
+                        in = correctFormat(in);
+                        url = links.get(in).attr("abs:href");
+                        if (url == null) {
+                            System.out.println("Gibberish Input, try again: ");
+                        } else {
+                            pInput = true;
+                            break;
+                        }
+                    } catch (Exception e){
+                        System.out.println("Gibberish Input, try again: ");
+                        continue;
+                    }
+                }
+                System.out.print("Enter Category2: ");
+                boolean qInput = false;
+                while (true) {
+                    String in = src.nextLine();
+                    try {
+                        in = correctFormat(in);
+                        subUrl = links.get(in).attr("abs:href");
+                        if (subUrl == null) {
+                            System.out.println("Gibberish Input, try again: ");
+                        } else {
+                            qInput = true;
+                            break;
+                        }
+                    } catch (Exception e){
+                        System.out.println("Gibberish Input, try again: ");
+                        continue;
+                    }
+                }
+                try {
+                    sl = new Q8(url, 8, subUrl);
+                    answer = sl.getSolution();
+                } catch (Exception e){
+                    e.printStackTrace();
+                }
                 break;
             case 9:
                 url = links.get("Best Animated Feature").attr("abs:href");
