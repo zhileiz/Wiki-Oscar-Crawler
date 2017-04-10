@@ -29,7 +29,7 @@ public class Driver {
         while (true){
             System.out.println("What do you want to know?: ");
             printQuestions();
-            String input = src.next();
+            String input = src.nextLine();
             if (input.equals("quit") || input.equals("exit")){
                 break;
             } else {
@@ -68,7 +68,7 @@ public class Driver {
             case 2:
                 url = links.get("Best Original Screenplay").attr("abs:href");
                 System.out.println("Enter the Screeplay title: ");
-                String input = src.next();
+                String input = src.nextLine();
                 try {
                     sl = new Q2(url, 2, input);
                     answer = sl.getSolution();
@@ -77,9 +77,40 @@ public class Driver {
                 }
                 break;
             case 3:
-                url = links.get("Best Animated Feature").attr("abs:href");
-                sl = new Q3(url, 3);
-                answer = sl.getSolution();
+                System.out.print("Enter Category: ");
+                boolean hasInput = false;
+                while (true) {
+                    String in = src.nextLine();
+                    try {
+                        in = correctFormat(in);
+                        url = links.get(in).attr("abs:href");
+                        if (url == null) {
+                            System.out.println("Gibberish Input, try again: ");
+                        } else {
+                            hasInput = true;
+                            break;
+                        }
+                    } catch (Exception e){
+                        System.out.println("Gibberish Input, try again: ");
+                        continue;
+                    }
+                }
+                System.out.println("Choose Decade of: ");
+                System.out.println("1. 1960s");
+                System.out.println("2. 1970s");
+                System.out.println("3. 1980s");
+                System.out.println("4. 1990s");
+                System.out.println("5. 2000s");
+                System.out.println("6. 2010s");
+                String ip = src.nextLine();
+                try {
+                    int it = Integer.parseInt(ip);
+                    sl = new Q3(url, 3, it);
+                    answer = sl.getSolution();
+                } catch (Exception e){
+                    e.printStackTrace();
+                }
+                break;
             case 4:
                 url = links.get("Best Animated Feature").attr("abs:href");
                 sl = new Q4(url, 4);
@@ -131,6 +162,17 @@ public class Driver {
         System.out.println("9. Movies with all big category nominations? ");
         System.out.println("10.(WildCard) Nominated at least 2 times but no wins in ... ?");
         System.out.println("!! Or type 'quit' or 'exit' to exit !!");
+    }
+
+    private String correctFormat(String str){
+        str = str.toLowerCase();
+        String st[] = str.split(" ");
+        StringBuilder sb = new StringBuilder();
+        for (String s : st){
+            sb.append(s.substring(0,1).toUpperCase() + s.substring(1));
+            sb.append(" ");
+        }
+        return sb.toString().substring(0,sb.length()-1);
     }
 
 }
