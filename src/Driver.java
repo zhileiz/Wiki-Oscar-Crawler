@@ -66,9 +66,15 @@ public class Driver {
                 }
                 break;
             case 2:
-                url = links.get("Best Animated Feature").attr("abs:href");
-                sl = new Q2(url, 2);
-                answer = sl.getSolution();
+                url = links.get("Best Original Screenplay").attr("abs:href");
+                System.out.println("Enter the Screeplay title: ");
+                String input = src.next();
+                try {
+                    sl = new Q2(url, 2, input);
+                    answer = sl.getSolution();
+                } catch (IOException e){
+                    e.printStackTrace();
+                }
                 break;
             case 3:
                 url = links.get("Best Animated Feature").attr("abs:href");
